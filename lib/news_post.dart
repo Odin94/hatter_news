@@ -1,3 +1,5 @@
+import 'package:auto_size_text/auto_size_text.dart';
+
 import 'package:flutter/material.dart';
 import 'package:hatter_news/main.dart';
 
@@ -23,7 +25,7 @@ class NewsPost extends StatelessWidget {
                       ),
                       HeadLine(
                           text:
-                              "Congress votes to make open government data the default in the United States"),
+                              "Congress votes to make open government data the default in the United States."),
                       PostInfo(
                           author: "danso",
                           ageWithUnit: "7 hours",
@@ -43,7 +45,8 @@ class HeadLine extends StatelessWidget {
     return Center(
         child: Padding(
             padding: EdgeInsets.all(6.0),
-            child: Text(text,
+            child: AutoSizeText(text,
+                maxLines: 5,
                 style: TextStyle(color: Colors.white, fontSize: 18))));
   }
 }
@@ -65,20 +68,24 @@ class PostInfo extends StatelessWidget {
         padding: EdgeInsets.all(6.0),
         child: Column(children: [
           Row(children: [
-            Text("by $author",
+            AutoSizeText("by $author",
+                maxLines: 1,
                 style: TextStyle(color: Colors.white70, fontSize: 12)),
             Text("  |  ",
                 style: TextStyle(color: Colors.white70, fontSize: 12)),
-            Text("$ageWithUnit ago",
+            AutoSizeText("$ageWithUnit ago",
+                maxLines: 1,
                 style: TextStyle(color: Colors.white70, fontSize: 12)),
           ]),
           DefaultPadding(),
           Row(children: [
-            Text("$commentCount comments",
+            AutoSizeText("$commentCount comments",
+                maxLines: 1,
                 style: TextStyle(color: Colors.white70, fontSize: 12)),
             Text("  |  ",
                 style: TextStyle(color: Colors.white70, fontSize: 12)),
-            Text("score: $score",
+            AutoSizeText("score: $score",
+                maxLines: 1,
                 style: TextStyle(color: Colors.orange, fontSize: 12)),
           ])
         ]));
