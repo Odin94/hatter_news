@@ -57,9 +57,19 @@ class _MyHomePageState extends State<MyHomePage> {
         body: Container(
             margin: EdgeInsets.only(top: 20.0),
             child: ListView(padding: EdgeInsets.all(8.0), children: [
-              Row(children: [NewsPost(), NewsPost()]),
-              Row(children: [NewsPost(), NewsPost()])
+              Row(children: [NewsPost(), DefaultPadding(), NewsPost()]),
+              DefaultPadding(),
+              Row(children: [NewsPost(), DefaultPadding(), NewsPost()])
             ]) // This trailing comma makes auto-formatting nicer for build methods.
             ));
+  }
+}
+
+class DefaultPadding extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: EdgeInsets.all(4.0),
+    );
   }
 }

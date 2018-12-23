@@ -7,6 +7,7 @@ class NewsPost extends StatelessWidget {
         child: Container(
             color: Colors.white,
             height: 300,
+            padding: EdgeInsets.all(4.0),
             child: Card(
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.only(
