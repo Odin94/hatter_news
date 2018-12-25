@@ -1,9 +1,14 @@
 import 'package:auto_size_text/auto_size_text.dart';
 
 import 'package:flutter/material.dart';
+import 'package:hatter_news/hackernews/item.dart';
 import 'package:hatter_news/main.dart';
 
 class NewsPost extends StatelessWidget {
+  final Item item;
+
+  NewsPost(this.item);
+
   @override
   Widget build(BuildContext context) {
     return Expanded(
@@ -23,14 +28,12 @@ class NewsPost extends StatelessWidget {
                         height: 160.0,
                         fit: BoxFit.cover,
                       ),
-                      HeadLine(
-                          text:
-                              "Congress votes to make open government data the default in the United States."),
+                      HeadLine(text: item.title),
                       PostInfo(
-                          author: "danso",
+                          author: item.by,
                           ageWithUnit: "7 hours",
-                          commentCount: "81",
-                          score: "544")
+                          commentCount: item.descendants,
+                          score: item.score),
                     ]))));
   }
 }
@@ -60,7 +63,8 @@ class PostInfo extends StatelessWidget {
       @required this.score})
       : super(key: key);
 
-  final String author, ageWithUnit, commentCount, score;
+  final String author, ageWithUnit;
+  final int commentCount, score;
 
   @override
   Widget build(BuildContext context) {
