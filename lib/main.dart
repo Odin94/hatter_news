@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hatter_news/news_post.dart';
+import 'package:hatter_news/widgets/pages/posts_page.dart';
 
 void main() => runApp(MyApp());
 
@@ -44,6 +44,7 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
+// TODO: Fix await async stuff, add posts to posts-page and actually use them
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
@@ -54,14 +55,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // the App.build method, and use it to set our appbar title.
           title: Text(widget.title),
         ),
-        body: Container(
-            margin: EdgeInsets.only(top: 20.0),
-            child: ListView(padding: EdgeInsets.all(8.0), children: [
-              Row(children: [NewsPost(), DefaultPadding(), NewsPost()]),
-              DefaultPadding(),
-              Row(children: [NewsPost(), DefaultPadding(), NewsPost()])
-            ]) // This trailing comma makes auto-formatting nicer for build methods.
-            ));
+        body: PostsPage());
   }
 }
 
