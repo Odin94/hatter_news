@@ -24,4 +24,5 @@ flutter:
   uses-material-design: true
 
   assets:
-      - images/test.png
+      - images/defaultPreview.png
+      - secrets/api_keys.json

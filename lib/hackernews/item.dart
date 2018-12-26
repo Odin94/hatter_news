@@ -39,7 +39,7 @@ class Item {
       throw Exception(json['error']);
     }
 
-    DateTime dateTime = null;
+    DateTime dateTime;
     if (json['time'] != null) {
       dateTime = DateTime.fromMillisecondsSinceEpoch(json['time']);
     }

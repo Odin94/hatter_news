@@ -22,7 +22,7 @@ class _PostsPageState extends State<PostsPage> {
 
   @override
   Widget build(BuildContext context) {
-    buildMemes(context, snapshot) {
+    buildPostList(context, snapshot) {
       if (snapshot.hasData) {
         return Container(
           margin: EdgeInsets.only(top: 20.0),
@@ -38,7 +38,7 @@ class _PostsPageState extends State<PostsPage> {
     return Scaffold(
         backgroundColor: Colors.grey[200],
         body:
-            FutureBuilder<List<Item>>(future: this.posts, builder: buildMemes));
+            FutureBuilder<List<Item>>(future: this.posts, builder: buildPostList));
   }
 
   Widget postsFromItems(List<Item> data) {

@@ -2,6 +2,7 @@ import 'package:auto_size_text/auto_size_text.dart';
 
 import 'package:flutter/material.dart';
 import 'package:hatter_news/hackernews/item.dart';
+import 'package:hatter_news/linkpreview/linkpreview.dart';
 import 'package:hatter_news/main.dart';
 
 class NewsPost extends StatelessWidget {
@@ -11,6 +12,22 @@ class NewsPost extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    buildPreviewImage(context, snapshot) {
+      if (snapshot.hasData) {
+        return Image.network(
+          snapshot.data,
+          height: 160.0,
+          fit: BoxFit.cover,
+        );
+      } else {
+        return Image.asset(
+          "images/defaultPreview.png",
+          height: 160.0,
+          fit: BoxFit.cover,
+        );
+      }
+    }
+
     return Expanded(
         child: Container(
             height: 350,
@@ -23,11 +40,9 @@ class NewsPost extends StatelessWidget {
                     mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Image.asset(
-                        'images/test.png',
-                        height: 160.0,
-                        fit: BoxFit.cover,
-                      ),
+                      FutureBuilder<String>(
+                          future: LinkPreview.getPreview(this.item.url),
+                          builder: buildPreviewImage),
                       HeadLine(text: item.title),
                       Expanded(
                         child: PostInfo(
