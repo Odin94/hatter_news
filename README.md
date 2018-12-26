@@ -1,6 +1,6 @@
 # hatter_news
 
-![screenshot of the app](https://imgur.com/3ITp9pc)
+![screenshot of the app](https://i.imgur.com/3ITp9pc.png)
 
 
 A hackernews client showing previews of the linked websites.
