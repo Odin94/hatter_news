@@ -1,9 +1,7 @@
 # hatter_news
+A hackernews client showing previews of the linked websites.
 
 ![screenshot of the app](https://i.imgur.com/3ITp9pc.png)
-
-
-A hackernews client showing previews of the linked websites.
 
 NOTE: This project is currently not on any app store and must be built from source to be used.
 
