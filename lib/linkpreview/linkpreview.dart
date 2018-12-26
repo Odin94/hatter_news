@@ -23,7 +23,8 @@ class LinkPreview {
 
       return imageUrl;
     } else {
-      print("Couldn't load $requestUrl");
+      print(
+          "Couldn't load $requestUrl. Usually this is due to 'forbidden by robots.txt'");
       throw Exception("Couldn't load $requestUrl");
     }
   }
