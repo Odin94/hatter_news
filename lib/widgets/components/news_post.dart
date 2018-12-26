@@ -20,7 +20,7 @@ class NewsPost extends StatelessWidget {
                 color: Colors.black87,
                 child: Column(
                     mainAxisAlignment: MainAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.min,
+                    mainAxisSize: MainAxisSize.max,
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
                       Image.asset(
@@ -29,14 +29,15 @@ class NewsPost extends StatelessWidget {
                         fit: BoxFit.cover,
                       ),
                       HeadLine(text: item.title),
-                      Expanded(
-                          child: Align(
-                              alignment: Alignment.bottomLeft,
-                              child: PostInfo(
-                                  author: item.by,
-                                  ageWithUnit: "7 hours",
-                                  commentCount: item.descendants,
-                                  score: item.score))),
+                      Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            PostInfo(
+                                author: item.by,
+                                ageWithUnit: "7 hours",
+                                commentCount: item.descendants,
+                                score: item.score),
+                          ]),
                     ]))));
   }
 }
@@ -73,29 +74,33 @@ class PostInfo extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
         padding: EdgeInsets.all(6.0),
-        child: Column(children: [
-          Row(children: [
-            AutoSizeText("by $author",
-                maxLines: 1,
-                style: TextStyle(color: Colors.white70, fontSize: 12)),
-          ]),
-          DefaultPadding(),
-          Row(children: [
-            AutoSizeText("$ageWithUnit ago",
-                maxLines: 1,
-                style: TextStyle(color: Colors.white70, fontSize: 12)),
-          ]),
-          DefaultPadding(),
-          Row(children: [
-            AutoSizeText("$commentCount comments",
-                maxLines: 1,
-                style: TextStyle(color: Colors.white70, fontSize: 12)),
-            Text("  |  ",
-                style: TextStyle(color: Colors.white70, fontSize: 12)),
-            AutoSizeText("score: $score",
-                maxLines: 1,
-                style: TextStyle(color: Colors.orange, fontSize: 12)),
-          ])
-        ]));
+        child: Column(
+            mainAxisSize: MainAxisSize.max,
+            mainAxisAlignment: MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(children: [
+                AutoSizeText("by $author",
+                    maxLines: 1,
+                    style: TextStyle(color: Colors.white70, fontSize: 12)),
+              ]),
+              DefaultPadding(),
+//              Row(children: [
+//                AutoSizeText("$ageWithUnit ago",
+//                    maxLines: 1,
+//                    style: TextStyle(color: Colors.white70, fontSize: 12)),
+//              ]),
+//              DefaultPadding(),
+              Row(children: [
+                AutoSizeText("$commentCount comments",
+                    maxLines: 1,
+                    style: TextStyle(color: Colors.white70, fontSize: 12)),
+                Text("  |  ",
+                    style: TextStyle(color: Colors.white70, fontSize: 12)),
+                AutoSizeText("score: $score",
+                    maxLines: 1,
+                    style: TextStyle(color: Colors.orange, fontSize: 12)),
+              ])
+            ]));
   }
 }
