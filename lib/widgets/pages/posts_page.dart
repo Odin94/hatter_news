@@ -13,16 +13,11 @@ class PostsPage extends StatefulWidget {
 
 class _PostsPageState extends State<PostsPage> {
   Future<List<Item>> posts;
-  static const types = {
-    "top": "topstories",
-    "new": "newstories",
-    "best": "beststories"
-  };
 
   @override
   void initState() {
     super.initState();
-    posts = HackernewsClient.getItemsByType("topstories", 15);
+    posts = HackernewsClient.getItemsByType("topstories", 16);
   }
 
   @override

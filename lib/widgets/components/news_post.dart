@@ -29,15 +29,13 @@ class NewsPost extends StatelessWidget {
                         fit: BoxFit.cover,
                       ),
                       HeadLine(text: item.title),
-                      Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            PostInfo(
-                                author: item.by,
-                                ageWithUnit: "7 hours",
-                                commentCount: item.descendants,
-                                score: item.score),
-                          ]),
+                      Expanded(
+                        child: PostInfo(
+                            author: item.by,
+                            ageWithUnit: "7 hours",
+                            commentCount: item.descendants,
+                            score: item.score),
+                      ),
                     ]))));
   }
 }
@@ -85,12 +83,6 @@ class PostInfo extends StatelessWidget {
                     style: TextStyle(color: Colors.white70, fontSize: 12)),
               ]),
               DefaultPadding(),
-//              Row(children: [
-//                AutoSizeText("$ageWithUnit ago",
-//                    maxLines: 1,
-//                    style: TextStyle(color: Colors.white70, fontSize: 12)),
-//              ]),
-//              DefaultPadding(),
               Row(children: [
                 AutoSizeText("$commentCount comments",
                     maxLines: 1,

@@ -8,7 +8,7 @@ class HackernewsClient {
   static final String baseUrl =
       "https://hacker-news.firebaseio.com/$apiVersion/";
 
-  static Future<List<Item>> getItemsByType(String type, maxAmount) async {
+  static Future<List<Item>> getItemsByType(String type, int maxAmount) async {
     String url = baseUrl + type + ".json";
     final response = await http.get(url);
 
