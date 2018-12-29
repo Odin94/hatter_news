@@ -31,3 +31,4 @@ NOTE: This project is currently not on any app store and must be built from sour
 * Allow filtering by other things than "top"
 * Allow saving posts / comments
 * Expanding / collapsing comments
+* Re-load on swipe down when scrolled up maximally
