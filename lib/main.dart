@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hatter_news/widgets/pages/comment_page.dart';
 import 'package:hatter_news/widgets/pages/posts_page.dart';
 
 void main() => runApp(MyApp());
@@ -44,10 +45,39 @@ class MyHomePage extends StatefulWidget {
   _MyHomePageState createState() => _MyHomePageState();
 }
 
-// TODO: Fix await async stuff, add posts to posts-page and actually use them
+enum PageState { posts_page, comments_page }
+
 class _MyHomePageState extends State<MyHomePage> {
+  PageState state;
+  int openPostId;
+
+  _openPost(int openPostId) {
+    setState(() {
+      state = PageState.comments_page;
+      this.openPostId = openPostId;
+    });
+  }
+
+  _goToPostsPage() {
+    setState(() {
+      state = PageState.posts_page;
+      this.openPostId = null;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    buildPage() {
+      switch (state) {
+        case PageState.posts_page:
+          return PostsPage(openPost: _openPost);
+        case PageState.comments_page:
+          return CommentPage(postId: openPostId, closePost: _goToPostsPage);
+        default:
+          return PostsPage(openPost: _openPost);
+      }
+    }
+
     return Scaffold(
         backgroundColor: Colors.grey[200],
         appBar: AppBar(
@@ -55,7 +85,7 @@ class _MyHomePageState extends State<MyHomePage> {
           // the App.build method, and use it to set our appbar title.
           title: Text(widget.title),
         ),
-        body: PostsPage());
+        body: buildPage());
   }
 }
 

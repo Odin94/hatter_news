@@ -5,7 +5,9 @@ import 'package:hatter_news/main.dart';
 import 'package:hatter_news/widgets/components/news_post.dart';
 
 class PostsPage extends StatefulWidget {
-  const PostsPage({Key key}) : super(key: key);
+  const PostsPage({Key key, this.openPost}) : super(key: key);
+
+  final openPost;
 
   @override
   State<StatefulWidget> createState() => _PostsPageState();
@@ -37,8 +39,8 @@ class _PostsPageState extends State<PostsPage> {
 
     return Scaffold(
         backgroundColor: Colors.grey[200],
-        body:
-            FutureBuilder<List<Item>>(future: this.posts, builder: buildPostList));
+        body: FutureBuilder<List<Item>>(
+            future: this.posts, builder: buildPostList));
   }
 
   Widget postsFromItems(List<Item> data) {
@@ -47,13 +49,13 @@ class _PostsPageState extends State<PostsPage> {
     for (int i = 0; i < data.length; i += 2) {
       if (i + 1 < data.length) {
         rows.add(Row(children: [
-          NewsPost(data[i]),
+          NewsPost(item: data[i], openPost: widget.openPost),
           DefaultPadding(),
-          NewsPost(data[i + 1])
+          NewsPost(item: data[i + 1], openPost: widget.openPost)
         ]));
       } else {
         rows.add(Row(children: [
-          NewsPost(data[i]),
+          NewsPost(item: data[i], openPost: widget.openPost),
         ]));
       }
     }

@@ -7,8 +7,9 @@ import 'package:hatter_news/main.dart';
 
 class NewsPost extends StatelessWidget {
   final Item item;
+  final openPost;
 
-  NewsPost(this.item);
+  NewsPost({Key key, this.item, this.openPost}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -29,29 +30,33 @@ class NewsPost extends StatelessWidget {
     }
 
     return Expanded(
-        child: Container(
-            height: 350,
-            padding: EdgeInsets.all(4.0),
-            color: Colors.white,
-            child: Card(
-                color: Colors.black87,
-                child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    mainAxisSize: MainAxisSize.max,
-                    crossAxisAlignment: CrossAxisAlignment.stretch,
-                    children: [
-                      FutureBuilder<String>(
-                          future: LinkPreview.getPreview(this.item.url),
-                          builder: buildPreviewImage),
-                      HeadLine(text: item.title),
-                      Expanded(
-                        child: PostInfo(
-                            author: item.by,
-                            ageWithUnit: "7 hours",
-                            commentCount: item.descendants,
-                            score: item.score),
-                      ),
-                    ]))));
+        child: GestureDetector(
+            onTap: () {
+              openPost(this.item.id);
+            },
+            child: Container(
+                height: 350,
+                padding: EdgeInsets.all(4.0),
+                color: Colors.white,
+                child: Card(
+                    color: Colors.black87,
+                    child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        mainAxisSize: MainAxisSize.max,
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          FutureBuilder<String>(
+                              future: LinkPreview.getPreview(this.item.url),
+                              builder: buildPreviewImage),
+                          HeadLine(text: item.title),
+                          Expanded(
+                            child: PostInfo(
+                                author: item.by,
+                                ageWithUnit: "7 hours",
+                                commentCount: item.descendants,
+                                score: item.score),
+                          ),
+                        ])))));
   }
 }
 

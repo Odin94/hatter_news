@@ -25,12 +25,12 @@ class HackernewsClient {
   }
 
   static Future<List<Item>> toItems(List<String> ids) async {
-    final items = await Future.wait(ids.map((id) => resolveItemId(id)));
+    final items = await Future.wait(ids.map((id) => getItemById(id)));
 
     return items.where((item) => item != null).toList();
   }
 
-  static Future<Item> resolveItemId(String id) async {
+  static Future<Item> getItemById(String id) async {
     String url = baseUrl + "item/" + id + ".json";
     final response = await http.get(url);
 

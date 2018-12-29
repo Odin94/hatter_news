@@ -16,16 +16,21 @@ class LinkPreview {
     String apiKey = await _getApiKey();
     String requestUrl = "$_baseUrl?key=$apiKey&q=$url";
     final response = await http.get(requestUrl);
+    final responseBody = (json.decode(response.body) as Map);
 
     if (response.statusCode == 200) {
-      String imageUrl = (json.decode(response.body) as Map)["image"];
+      String imageUrl = responseBody["image"];
       _previewCache[url] = imageUrl;
 
       return imageUrl;
     } else {
-      print(
-          "Couldn't load $requestUrl. Usually this is due to 'forbidden by robots.txt'");
-      throw Exception("Couldn't load $requestUrl");
+      String error = responseBody["error"] != null ? responseBody["error"] : "";
+      String description = responseBody["description"] != null
+          ? responseBody["description"]
+          : "";
+      print("Couldn't load $requestUrl.  Error: $error\n$description");
+      throw Exception(
+          "Couldn't load $requestUrl.  Error: $error\n$description");
     }
   }
 
