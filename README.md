@@ -16,3 +16,18 @@ NOTE: This project is currently not on any app store and must be built from sour
     ```
 
 * Build the project as you would build any other flutter project and load onto your device.
+
+## Open TODOs:
+
+* Add viewing links with something like https://github.com/fluttercommunity/flutter_webview_plugin
+* Add post age
+* prevent text-overflow in posts with really, really long titles
+* Add log in functionality in addition to functionality to
+    * Rate posts
+    * Rate comments
+    * Post comments
+    * Post posts
+    
+* Allow filtering by other things than "top"
+* Allow saving posts / comments
+* Expanding / collapsing comments

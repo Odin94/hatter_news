@@ -1,3 +1,0 @@
-- consider viewing links with https://github.com/fluttercommunity/flutter_webview_plugin
-- re-add post age with real calculation instead of a placeholder
-- prevent text-overflow in posts with really long titles
