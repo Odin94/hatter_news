@@ -6,18 +6,17 @@ import 'package:hatter_news/linkpreview/linkpreview.dart';
 import 'package:hatter_news/widgets/components/comment.dart';
 import 'package:hatter_news/widgets/components/preview_image.dart';
 
-class CommentPage extends StatefulWidget {
-  const CommentPage({Key key, @required this.postId, this.closePost})
+class CommentsPage extends StatefulWidget {
+  const CommentsPage({Key key, @required this.postId})
       : super(key: key);
 
   final int postId;
-  final closePost;
 
   @override
-  State<StatefulWidget> createState() => _CommentPageState();
+  State<StatefulWidget> createState() => _CommentsPageState();
 }
 
-class _CommentPageState extends State<CommentPage> {
+class _CommentsPageState extends State<CommentsPage> {
   @override
   void initState() {
     super.initState();
