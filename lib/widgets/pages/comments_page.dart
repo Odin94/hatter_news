@@ -3,6 +3,7 @@ import 'package:flutter/widgets.dart';
 import 'package:hatter_news/hackernews/hackernews_client.dart';
 import 'package:hatter_news/hackernews/item.dart';
 import 'package:hatter_news/linkpreview/linkpreview.dart';
+import 'package:hatter_news/main.dart';
 import 'package:hatter_news/widgets/components/comment.dart';
 import 'package:hatter_news/widgets/components/preview_image.dart';
 
@@ -42,34 +43,47 @@ class _CommentPageState extends State<CommentPage> {
       }
     }
 
-    Widget getHeaderImage(snapshot) {
-      return FutureBuilder<String>(
-          future: LinkPreview.getPreview(snapshot.data.url),
-          builder: PreviewImage.getBuildPreviewImageWithHeight(120.0));
+    Widget buildHeader(snapshot) {
+      return Container(
+          margin: EdgeInsets.only(bottom: 20),
+          height: 260.0,
+          child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Expanded(
+                    child: FutureBuilder<String>(
+                        future: LinkPreview.getPreview(snapshot.data.url),
+                        builder: PreviewImage.getBuildPreviewImageWithHeight(
+                            160.0))),
+                Padding(padding: EdgeInsets.only(top: 15.0)),
+                Text(
+                  snapshot.data.title,
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                ),
+              ]));
     }
 
     // TODO: Fix nothing being displayed, probably maybe because we added a column
     buildCommentPage(context, snapshot) {
       if (snapshot.hasData) {
         return Container(
-            child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                children: [
-              Expanded(
-                  child: Container(
-                      margin: EdgeInsets.only(top: 20.0),
-                      child: ListView(
-                        padding: EdgeInsets.all(8.0),
-                        children: ([getHeaderImage(snapshot)]..addAll(snapshot
-                            .data.kids
-                            .map<Widget>((commentId) => FutureBuilder<Item>(
-                                future: HackernewsClient.getItemById(
-                                    commentId.toString()),
-                                builder: buildComment))
-                            .toList())),
-                      )))
-            ]));
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+          Expanded(
+              child: Container(
+                  margin: EdgeInsets.only(top: 20.0),
+                  child: ListView(
+                    padding: EdgeInsets.all(8.0),
+                    children: ([buildHeader(snapshot)]..addAll(snapshot
+                        .data.kids
+                        .map<Widget>((commentId) => FutureBuilder<Item>(
+                            future: HackernewsClient.getItemById(
+                                commentId.toString()),
+                            builder: buildComment))
+                        .toList())),
+                  )))
+        ]));
       } else if (snapshot.hasError) {
         return Container(
             child: Center(
