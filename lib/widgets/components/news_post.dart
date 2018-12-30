@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:hatter_news/hackernews/item.dart';
 import 'package:hatter_news/linkpreview/linkpreview.dart';
 import 'package:hatter_news/main.dart';
+import 'package:hatter_news/widgets/components/preview_image.dart';
 
 class NewsPost extends StatelessWidget {
   final Item item;
@@ -13,22 +14,6 @@ class NewsPost extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    buildPreviewImage(context, snapshot) {
-      if (snapshot.hasData) {
-        return Image.network(
-          snapshot.data,
-          height: 160.0,
-          fit: BoxFit.cover,
-        );
-      } else {
-        return Image.asset(
-          "images/defaultPreview.png",
-          height: 160.0,
-          fit: BoxFit.cover,
-        );
-      }
-    }
-
     return Expanded(
         child: GestureDetector(
             onTap: () {
@@ -47,7 +32,7 @@ class NewsPost extends StatelessWidget {
                         children: [
                           FutureBuilder<String>(
                               future: LinkPreview.getPreview(this.item.url),
-                              builder: buildPreviewImage),
+                              builder: PreviewImage.buildPreviewImage),
                           HeadLine(text: item.title),
                           Expanded(
                             child: PostInfo(

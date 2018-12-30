@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hatter_news/widgets/pages/comment_page.dart';
+import 'package:hatter_news/widgets/pages/comments_page.dart';
 import 'package:hatter_news/widgets/pages/posts_page.dart';
 
 void main() => runApp(MyApp());
