@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_html_view/flutter_html_view.dart';
 
 class Comment extends StatelessWidget {
   Comment(
@@ -27,8 +28,10 @@ class Comment extends StatelessWidget {
                   top: 6.0,
                   right: 6.0,
                   bottom: 6.0),
-              child: Text(text,
-                  style: TextStyle(color: Colors.black38, fontSize: 14)))
+              child: HtmlView(data: text)),
+
+//              Text(text,
+//                  style: TextStyle(color: Colors.black38, fontSize: 14)))
         ]));
   }
 }
