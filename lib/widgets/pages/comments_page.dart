@@ -3,7 +3,6 @@ import 'package:flutter/widgets.dart';
 import 'package:hatter_news/hackernews/hackernews_client.dart';
 import 'package:hatter_news/hackernews/item.dart';
 import 'package:hatter_news/linkpreview/linkpreview.dart';
-import 'package:hatter_news/main.dart';
 import 'package:hatter_news/widgets/components/comment.dart';
 import 'package:hatter_news/widgets/components/preview_image.dart';
 
@@ -64,6 +63,19 @@ class _CommentPageState extends State<CommentPage> {
               ]));
     }
 
+    buildComments(snapshot) {
+      try {
+        return snapshot.data.kids
+            .map<Widget>((commentId) => FutureBuilder<Item>(
+                future: HackernewsClient.getItemById(commentId.toString()),
+                builder: buildComment))
+            .toList();
+      } catch (err) {
+        print("Failed to buildComments(): $err");
+        return [Padding(padding: EdgeInsets.all(5.0))];
+      }
+    }
+
     // TODO: Fix nothing being displayed, probably maybe because we added a column
     buildCommentPage(context, snapshot) {
       if (snapshot.hasData) {
@@ -75,13 +87,8 @@ class _CommentPageState extends State<CommentPage> {
                   margin: EdgeInsets.only(top: 20.0),
                   child: ListView(
                     padding: EdgeInsets.all(8.0),
-                    children: ([buildHeader(snapshot)]..addAll(snapshot
-                        .data.kids
-                        .map<Widget>((commentId) => FutureBuilder<Item>(
-                            future: HackernewsClient.getItemById(
-                                commentId.toString()),
-                            builder: buildComment))
-                        .toList())),
+                    children: ([buildHeader(snapshot)]
+                      ..addAll(buildComments(snapshot))),
                   )))
         ]));
       } else if (snapshot.hasError) {

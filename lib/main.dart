@@ -51,11 +51,23 @@ class _MyHomePageState extends State<MyHomePage> {
   PageState state;
   int openPostId;
 
-  _openPost(int openPostId) {
-    setState(() {
-      state = PageState.comments_page;
-      this.openPostId = openPostId;
-    });
+  _openCommentsPage(int openPostId) {
+//    setState(() {
+//      state = PageState.comments_page;
+//      this.openPostId = openPostId;
+//    });
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => Scaffold(
+                backgroundColor: Colors.grey[200],
+                appBar: AppBar(
+                  // Here we take the value from the MyHomePage object that was created by
+                  // the App.build method, and use it to set our appbar title.
+                  title: Text(widget.title),
+                ),
+                body: CommentPage(
+                    postId: openPostId, closePost: _goToPostsPage))));
   }
 
   _goToPostsPage() {
@@ -70,11 +82,11 @@ class _MyHomePageState extends State<MyHomePage> {
     buildPage() {
       switch (state) {
         case PageState.posts_page:
-          return PostsPage(openPost: _openPost);
+          return PostsPage(openPost: _openCommentsPage);
         case PageState.comments_page:
           return CommentPage(postId: openPostId, closePost: _goToPostsPage);
         default:
-          return PostsPage(openPost: _openPost);
+          return PostsPage(openPost: _openCommentsPage);
       }
     }
 
