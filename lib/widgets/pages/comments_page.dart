@@ -36,8 +36,16 @@ class _CommentPageState extends State<CommentPage> {
             child: Center(
                 child: Text("Failed to fetch posts: ${snapshot.error}")));
       } else {
-        return Container();
+        return Padding(
+          padding: EdgeInsets.all(1.0),
+        );
       }
+    }
+
+    Widget getHeaderImage(snapshot) {
+      return FutureBuilder<String>(
+          future: LinkPreview.getPreview(snapshot.data.url),
+          builder: PreviewImage.getBuildPreviewImageWithHeight(120.0));
     }
 
     // TODO: Fix nothing being displayed, probably maybe because we added a column
@@ -48,20 +56,19 @@ class _CommentPageState extends State<CommentPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisSize: MainAxisSize.max,
                 children: [
-              FutureBuilder<String>(
-                  future: LinkPreview.getPreview(snapshot.data.url),
-                  builder: PreviewImage.buildPreviewImage),
-              Container(
-                  margin: EdgeInsets.only(top: 20.0),
-                  child: ListView(
-                    padding: EdgeInsets.all(8.0),
-                    children: snapshot.data.kids
-                        .map<Widget>((commentId) => FutureBuilder<Item>(
-                            future: HackernewsClient.getItemById(
-                                commentId.toString()),
-                            builder: buildComment))
-                        .toList(),
-                  ))
+              Expanded(
+                  child: Container(
+                      margin: EdgeInsets.only(top: 20.0),
+                      child: ListView(
+                        padding: EdgeInsets.all(8.0),
+                        children: ([getHeaderImage(snapshot)]..addAll(snapshot
+                            .data.kids
+                            .map<Widget>((commentId) => FutureBuilder<Item>(
+                                future: HackernewsClient.getItemById(
+                                    commentId.toString()),
+                                builder: buildComment))
+                            .toList())),
+                      )))
             ]));
       } else if (snapshot.hasError) {
         return Container(

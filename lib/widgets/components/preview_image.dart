@@ -11,6 +11,27 @@ class PreviewImage {
     );
   }
 
+  static Function(BuildContext context, AsyncSnapshot<String> snapshot)
+      getBuildPreviewImageWithHeight(double height) {
+    return (context, snapshot) {
+      if (snapshot.hasData) {
+        try {
+          return Image.network(
+            snapshot.data,
+            height: height,
+            fit: BoxFit.cover,
+          );
+        } catch (err) {
+          print(
+              "Failed to load image from ${snapshot.data} in new_post. Error: $err");
+          return _getDefaultPreviewImage();
+        }
+      } else {
+        return _getDefaultPreviewImage();
+      }
+    };
+  }
+
   static Widget buildPreviewImage(
       BuildContext context, AsyncSnapshot<String> snapshot) {
     if (snapshot.hasData) {
