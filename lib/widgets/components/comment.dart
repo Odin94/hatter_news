@@ -29,7 +29,7 @@ class Comment extends StatelessWidget {
                   top: 6.0,
                   right: 6.0,
                   bottom: 6.0),
-              child: HtmlView(data: text)),
+              child: HtmlView(data: "<p>$text</p>")),  // workaround: paragraph wrap to make HtmlView render free-flowing text
 
 //              Text(text,
 //                  style: TextStyle(color: Colors.black38, fontSize: 14)))
