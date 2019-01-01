@@ -7,8 +7,7 @@ import 'package:hatter_news/widgets/components/comment.dart';
 import 'package:hatter_news/widgets/components/preview_image.dart';
 
 class CommentsPage extends StatefulWidget {
-  const CommentsPage({Key key, @required this.postId})
-      : super(key: key);
+  const CommentsPage({Key key, @required this.postId}) : super(key: key);
 
   final int postId;
 
@@ -24,21 +23,39 @@ class _CommentsPageState extends State<CommentsPage> {
 
   @override
   Widget build(BuildContext context) {
-    buildComment(context, snapshot) {
-      if (snapshot.hasData) {
-        return Container(
-          margin: EdgeInsets.only(top: 5.0),
-          child: commentFromItem(snapshot.data),
-        );
-      } else if (snapshot.hasError) {
-        return Container(
-            child: Center(
-                child: Text("Failed to fetch posts: ${snapshot.error}")));
-      } else {
-        return Padding(
-          padding: EdgeInsets.all(1.0),
-        );
-      }
+    Function(BuildContext context, AsyncSnapshot<Item> snapshot)
+        buildCommentChainWithDepth(int depth) {
+      return (context, snapshot) {
+        if (snapshot.hasData) {
+          Item item = snapshot.data;
+          List<Widget> commentChain = [
+            Container(
+              margin: EdgeInsets.only(top: 5.0),
+              child: commentFromItem(item, depth),
+            )
+          ];
+
+          if (item.kids != null) {
+            for (int subCommentId in item.kids) {
+              commentChain.add(FutureBuilder<Item>(
+                  future: HackernewsClient.getItemById(subCommentId.toString()),
+                  builder: buildCommentChainWithDepth(depth + 1)));
+            }
+          }
+
+          return Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: commentChain);
+        } else if (snapshot.hasError) {
+          return Container(
+              child: Center(
+                  child: Text("Failed to fetch posts: ${snapshot.error}")));
+        } else {
+          return Padding(
+            padding: EdgeInsets.all(1.0),
+          );
+        }
+      };
     }
 
     Widget buildHeader(snapshot) {
@@ -67,7 +84,7 @@ class _CommentsPageState extends State<CommentsPage> {
         return snapshot.data.kids
             .map<Widget>((commentId) => FutureBuilder<Item>(
                 future: HackernewsClient.getItemById(commentId.toString()),
-                builder: buildComment))
+                builder: buildCommentChainWithDepth(0)))
             .toList();
       } catch (err) {
         print("Failed to buildComments(): $err");
@@ -104,11 +121,11 @@ class _CommentsPageState extends State<CommentsPage> {
         builder: buildCommentPage);
   }
 
-  Widget commentFromItem(Item item) {
+  Widget commentFromItem(Item item, int depth) {
     return Comment(
       author: item.by,
       text: item.text,
-      nestingDepth: 1,
+      nestingDepth: depth,
     );
   }
 }

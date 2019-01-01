@@ -15,6 +15,7 @@ class Comment extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      margin: EdgeInsets.only(left: 15.0 * this.nestingDepth),
         color: Colors.white70,
         child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
           Padding(
@@ -24,7 +25,7 @@ class Comment extends StatelessWidget {
                   style: TextStyle(color: Colors.deepOrange, fontSize: 14))),
           Padding(
               padding: EdgeInsets.only(
-                  left: 6.0 * this.nestingDepth,
+                  left: 6.0,
                   top: 6.0,
                   right: 6.0,
                   bottom: 6.0),

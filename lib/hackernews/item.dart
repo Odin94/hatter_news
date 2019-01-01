@@ -1,20 +1,22 @@
 class Item {
   final int id;
   final bool deleted;
-  final String type;
+  final String
+      type; // 	The type of item. One of "job", "story", "comment", "poll", or "pollopt".
   final String by;
   final DateTime time;
   final bool dead;
-  final int descendants;
+  final int
+      descendants; // In the case of stories or polls, the total comment count.
   final String title;
   final String url;
   final String text;
   final int score;
   final int parent;
   final int poll;
-  final List<dynamic> parts;
-  final List<dynamic> kids;
-  List<Item> comments = List();
+  final List<dynamic> parts; // A list of related pollopts, in display order.
+  final List<dynamic>
+      kids; // The ids of the item's comments, in ranked display order.
 
   Item(
       {this.id,
@@ -35,7 +37,7 @@ class Item {
 
   factory Item.fromJson(Map<String, dynamic> json) {
     if (json['error'] != null) {
-      print(json['error']);
+      print("Error in Item.fromJson: ${json['error']}");
       throw Exception(json['error']);
     }
 

@@ -40,7 +40,7 @@ class HackernewsClient {
       try {
         return Item.fromJson(json.decode(response.body));
       } catch (err) {
-        print(err);
+        print("Error in getItemById(): $err");
         return null;
       }
     }
